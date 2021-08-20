@@ -13,7 +13,7 @@ jobs:
         shell: cmd
 
       - name: Download SDL2_ttf
-        uses: albin-johansson/download-sdl2-ttf@v0.1.0
+        uses: albin-johansson/download-sdl2-ttf@latest
         with:
           sources_destination: .
           binaries_destination: bin
