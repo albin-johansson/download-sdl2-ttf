@@ -1,0 +1,47 @@
+name: "Download SDL2_ttf"
+description: "Download SDL2_ttf sources and binaries for Windows, using MSVC."
+
+branding:
+  icon: "download"
+  color: "green"
+
+inputs:
+  version:
+    description: "The version of SDL2_ttf that will be downloaded"
+    required: false
+    default: 2.0.15
+
+  sources_destination:
+    description: "Where the SDL2_ttf sources will be saved"
+    required: true
+
+  binaries_destination:
+    description: "Where the SDL2_ttf runtime binaries will be saved"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Download sources
+      shell: powershell
+      run: Invoke-WebRequest -Uri "https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-devel-${{inputs.version}}-VC.zip" `
+                             -OutFile ${{inputs.sources_destination}}/SDL2_ttf-devel-${{inputs.version}}-VC.zip
+
+    - name: Unzip sources
+      shell: cmd
+      run: |
+        cd ${{inputs.sources_destination}}
+        7z x -y SDL2_ttf-devel-${{inputs.version}}-VC.zip
+        del SDL2_ttf-devel-${{inputs.version}}-VC.zip
+
+    - name: Download runtime binaries
+      shell: powershell
+      run: Invoke-WebRequest -Uri "https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-${{inputs.version}}-win32-x64.zip" `
+                             -OutFile ${{inputs.binaries_destination}}/SDL2_ttf-${{inputs.version}}-win32-x64.zip
+
+    - name: Unzip runtime binaries archive
+      shell: cmd
+      run: |
+        cd ${{inputs.binaries_destination}}
+        7z x -y SDL2_ttf-${{inputs.version}}-win32-x64.zip
+        del SDL2_ttf-${{inputs.version}}-win32-x64.zip
