@@ -45,3 +45,4 @@ runs:
         cd ${{inputs.binaries_destination}}
         7z x -y SDL2_ttf-${{inputs.version}}-win32-x64.zip
         del SDL2_ttf-${{inputs.version}}-win32-x64.zip
+        dir
